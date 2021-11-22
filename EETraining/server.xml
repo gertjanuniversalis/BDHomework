@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+  <!-- Enable features -->
+  <featureManager>
+    <feature>webProfile-7.0</feature>
+    <feature>localConnector-1.0</feature>
+    <feature>adminCenter-1.0</feature>
+  </featureManager>
+  <!-- for admin center -->
+  <administrator-role>
+    <user>guest</user>
+  </administrator-role>
+  <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
+  <quickStartSecurity userName="admin" userPassword="admin" />
+  <keyStore id="defaultKeyStore" password="password" />
+  <!-- allow upload of files to the dropins directory, the remote container adapter relies on this configuration -->
+  <remoteFileAccess>
+    <writeDir>${server.config.dir}/dropins</writeDir>
+  </remoteFileAccess>
+  <applicationManager autoExpand="true" />
+  <applicationMonitor updateTrigger="mbean" />
+  <!--JPA:-->
+  <jpa defaultPersistenceProvider="org.hibernate.jpa.HibernatePersistenceProvider" />
+  <dataSource id="DefaultDataSource" jndiName="jdbc/mySQL" type="javax.sql.XADataSource">
+    <jdbcDriver javax.sql.XADataSource="com.mysql.cj.jdbc.MysqlXADataSource" libraryRef="MySQLLib" />
+    <properties databaseName="hellorest" user="root" password="root" portNumber="3306" serverName="localhost" useSSL="false" />
+  </dataSource>
+  <library id="MySQLLib">
+    <file name="${shared.config.dir}/lib/global/mysql-connector-java-8.0.9-rc.jar" />
+  </library>
+  <!-- <dataSource id="h2test" jndiName="jdbc/h2test">
+      <jdbcDriver javax.sql.XADataSource="org.h2.jdbcx.JdbcDataSource" javax.sql.ConnectionPoolDataSource="org.h2.jdbcx.JdbcDataSource" javax.sql.DataSource="org.h2.jdbcx.JdbcDataSource" libraryRef="H2JDBCLib" />
+      <properties URL="jdbc:h2:mem:testdb" user="sa" password="" />
+    </dataSource> -->
+  <!-- <library id="H2JDBCLib">
+      <file name="${shared.config.dir}/lib/global/h2-1.3.166.jar" />
+    </library> -->
+  <!--JPA - end-->
+  <!-- <logging traceSpecification="*=info:eclipselink.sql=all" traceFileName="stdout" traceFormat="BASIC" /> -->
+  <application id="hellorest_war_exploded" location="C:\temp\hellorest\target\hellorest" name="hellorest_war_exploded" type="war" />
+</server>
+
